@@ -32,7 +32,7 @@ To set up the project, follow these steps:
 
 1\. Clone the repository:
 
-   ```shell
+   ```shellscript
 
    git clone https://github.com/your-username/stacker.git
 
@@ -40,7 +40,7 @@ To set up the project, follow these steps:
 
 2\. Navigate to the project directory:
 
-   ```shell
+   ```shellscript
 
    cd stacker
 
@@ -48,7 +48,7 @@ To set up the project, follow these steps:
 
 3\. Install the dependencies:
 
-   ```shell
+   ```shellscript
 
    npm install
 
@@ -56,7 +56,7 @@ To set up the project, follow these steps:
 
 4\. Start the development server:
 
-   ```shell
+   ```shellscript
 
    npm start
 
