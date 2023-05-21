@@ -36,7 +36,6 @@ const Login: React.FC = () => {
         onChange={handleChange(setPassword)} 
         value={password} 
       />
-
       <button disabled={isLoading}>Log in</button>
       {error && <div className="error">{error}</div>}
     </form>
