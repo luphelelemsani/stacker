@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import CryptoJS from 'crypto-js';
-
-interface IUser {
-  email: string;
-  password: string;
-}
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../store/actions/auth-actions';
+import { AppDispatch } from '../store';
 
 interface IUseLogin {
   login: (email: string, password: string) => Promise<void>;
@@ -15,31 +12,18 @@ interface IUseLogin {
 export const useLogin = (): IUseLogin => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const user: IUser = {
-    email: "test@example.com",
-    password: CryptoJS.AES.encrypt("password123", 'secret-key').toString()
-  };
+  const dispatch:AppDispatch = useDispatch();
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
 
-    const encryptedPassword = CryptoJS.AES.encrypt(password, 'secret-key').toString();
-
-    if (email !== user.email || encryptedPassword !== user.password) {
+    try {
+      await dispatch(loginUser(email, password));
+      setIsLoading(false);
+    } catch (err) {
       setIsLoading(false);
       setError("Invalid email or password.");
-    } else {
-      // save the user to local storage
-      localStorage.setItem('user', JSON.stringify(user));
-
-      // set expiry time for the user data in local storage to 24 hours from now
-      const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;  // current time in milliseconds + 24 hours in milliseconds
-      localStorage.setItem('expiryTime', expiryTime.toString());
-
-      // update loading state
-      setIsLoading(false);
     }
   };
 
