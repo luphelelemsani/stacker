@@ -34,6 +34,10 @@ export const useLogin = (): IUseLogin => {
       // save the user to local storage
       localStorage.setItem('user', JSON.stringify(user));
 
+      // set expiry time for the user data in local storage to 24 hours from now
+      const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;  // current time in milliseconds + 24 hours in milliseconds
+      localStorage.setItem('expiryTime', expiryTime.toString());
+
       // update loading state
       setIsLoading(false);
     }
