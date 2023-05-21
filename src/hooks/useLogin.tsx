@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import CryptoJS from 'crypto-js';
 
 interface IUser {
   email: string;
@@ -17,14 +18,16 @@ export const useLogin = (): IUseLogin => {
 
   const user: IUser = {
     email: "test@example.com",
-    password: "password123"
+    password: CryptoJS.AES.encrypt("password123", 'secret-key').toString()
   };
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
 
-    if (email !== user.email || password !== user.password) {
+    const encryptedPassword = CryptoJS.AES.encrypt(password, 'secret-key').toString();
+
+    if (email !== user.email || encryptedPassword !== user.password) {
       setIsLoading(false);
       setError("Invalid email or password.");
     } else {
