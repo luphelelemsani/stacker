@@ -32,35 +32,27 @@ To set up the project, follow these steps:
 
 1\. Clone the repository:
 
-   ```
 
-   git clone https://github.com/your-username/stacker.git
+   `git clone https://github.com/luphelelemsani/stacker.git`
 
-   ```
 
 2\. Navigate to the project directory:
 
-   ```
 
-   cd stacker
+   `cd stacker`
 
-   ```
 
 3\. Install the dependencies:
 
-   ```
 
-   npm install
+   `npm install`
 
-   ```
 
 4\. Start the development server:
 
-   ```
 
-   npm start
+   `npm start`
 
-   ```
 
    The application will be running at `http://localhost:3000`.
 
