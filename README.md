@@ -56,6 +56,13 @@ To set up the project, follow these steps:
 
    The application will be running at `http://localhost:3000`.
 
+5\. Log in credentials
+
+     Email: test@example.com
+     Password: password123
+   
+   
+
 ## Available Scripts
 
 In the project directory, you can run the following scripts:
