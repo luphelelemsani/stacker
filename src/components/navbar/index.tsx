@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks/reduxHook';
 import { logoutUser } from '../../store/actions/auth-actions';
 import { AppDispatch } from '../../store';
-import "../theme/components/navbar.css"
+import "../../theme/components/navbar.css"
 
 const Navbar = () => {
   const dispatch:AppDispatch = useDispatch();

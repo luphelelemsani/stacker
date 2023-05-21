@@ -1,46 +1,165 @@
-# Getting Started with Create React App
+# Stacker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Stacker is a web application that fetches a list of Stack Overflow users and allows you to display, follow, and block them. It is built using React and Redux with TypeScript.
+
+## Tools Used
+
+- React: A JavaScript library for building user interfaces.
+
+- Redux: A predictable state container for managing application state.
+
+- React Redux: Official React bindings for Redux.
+
+- React Router: A routing library for React applications.
+
+- TypeScript: A typed superset of JavaScript that compiles to plain JavaScript.
+
+- Redux Toolkit: The official Redux toolkit package to simplify Redux development.
+
+- Jest: A JavaScript testing framework.
+
+- Testing Library: A set of utilities for testing React components.
+
+- ESLint: A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript.
+
+- Prettier: An opinionated code formatter.
+
+- Create React App: A tool to create React applications with no build configuration.
+
+## Getting Started
+
+To set up the project, follow these steps:
+
+1\. Clone the repository:
+
+   ```shell
+
+   git clone https://github.com/your-username/stacker.git
+
+   ```
+
+2\. Navigate to the project directory:
+
+   ```shell
+
+   cd stacker
+
+   ```
+
+3\. Install the dependencies:
+
+   ```shell
+
+   npm install
+
+   ```
+
+4\. Start the development server:
+
+   ```shell
+
+   npm start
+
+   ```
+
+   The application will be running at `http://localhost:3000`.
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can run the following scripts:
 
-### `npm start`
+- `npm start`: Starts the development server.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- `npm run build`: Builds the app for production.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- `npm test`: Runs the tests.
 
-### `npm test`
+- `npm run eject`: Ejects the Create React App configuration.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `npm run lint`: Lints the code using ESLint.
 
-### `npm run build`
+- `npm run fix`: Fixes linting issues automatically.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Folder Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The project structure is organized as follows:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+stacker/
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  README.md
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  node_modules/
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  package.json
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  public/
 
-## Learn More
+    index.html
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    favicon.ico
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ...
+
+  src/
+
+    components/
+
+      ...
+
+    hooks/
+
+      ...
+
+    pages/
+
+      ...
+
+    store/
+
+      actions/
+
+        auth-actions.ts
+
+        ...
+
+      reducers/
+
+        auth-reducer.ts
+
+        ...
+
+      store.ts
+
+    theme/
+
+      ...
+
+    App.tsx
+
+    index.tsx
+
+    ...
+
+  .eslintignore
+
+  .eslintrc.json
+
+  .gitignore
+
+  package-lock.json
+
+  tsconfig.json
+
+```
+
+The main code files are located in the `src` directory. The `components` directory contains reusable UI components, the `hooks` directory contains custom hooks, the `pages` directory contains page components, and the `store` directory contains Redux actions, reducers, and the store configuration.
+
+## Contributing
+
+Contributions to Stacker are welcome! If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository.
+
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).

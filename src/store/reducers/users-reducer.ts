@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSelector } from 'reselect';
+import { RootState } from '../index'; 
 
 export interface User {
 id: number;
@@ -10,21 +12,35 @@ isBlocked?: boolean;
 }
   
 
+
 // Async action to fetch users
 export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
-  async () => {
-    const response = await fetch('http://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow');
+  async ({page, sortOrder}: {page: number, sortOrder: 'asc' | 'desc'}) => {
+    const url = new URL('http://api.stackexchange.com/2.2/users');
+
+    // Add query parameters
+    const params = {
+      pagesize: '20', // This should probably also be a parameter
+      page: page.toString(),
+      order: sortOrder,
+      sort: 'reputation', 
+      site: 'stackoverflow',
+    };
+    Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value));
+
+    const response = await fetch(url.toString());
     const usersData = await response.json();
-    // Map to match User interface
+
     return usersData.items.map((user: any) => ({
       id: user.user_id,
       display_name: user.display_name,
       profile_image: user.profile_image,
-      reputation: user.reputation
+      reputation: user.reputation,
     }));
   }
 );
+  
 
 interface UsersState {
   users: User[];
@@ -86,3 +102,8 @@ const usersSlice = createSlice({
 export const { followUser, unfollowUser, blockUser, unblockUser } = usersSlice.actions;
 
 export default usersSlice.reducer;
+
+export const selectUserById = createSelector(
+  (state: RootState, userId: number) => state.users.users.find((user: User) => user.id === userId),
+  (user) => user
+);

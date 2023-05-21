@@ -1,64 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import { User } from '../../store/reducers/users-reducer';
+import { User, blockUser, followUser, unblockUser, unfollowUser } from '../../store/reducers/users-reducer';
+import { AppDispatch } from '../../store';
+import { useDispatch } from 'react-redux';
+import '../../theme/components/userProfile.css'; // Assuming your CSS file is named UserProfile.css and is located in the same directory
 
 interface UserProfileProps {
-  user: User | null;
-  fetchUser: () => Promise<User>;
+  user: User;
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ user, fetchUser }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
     
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
-  const [error, setError] = useState(null);
+  const dispatch:AppDispatch = useDispatch();
+
+  const {id, display_name, profile_image, reputation, isFollowed, isBlocked } = user
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [error, setError] = useState<string|null>(null);
 
 
   useEffect(() => {
     if (!user) {
-      setIsFetching(true);
-      fetchUser()
-        .then((userData) => {
-          user = userData;
-          setIsFetching(false);
-        })
-        .catch((err) => {
-          setIsFetching(false);
-          setError(err.message);
-        });
-    }
-  }, [fetchUser, user]);
+      setIsFetching(false);
+      setError("user profile not found");
+      }
+    
+  }, [user]);
 
-  const handleFollow = () => {
-    user!.isFollowed = true;
-  }
+  const handleFollowUser = (userId: number) => {
+    dispatch(followUser(userId));
+  };
 
-  const handleUnfollow = () => {
-    user!.isFollowed = false;
-  }
+  const handleUnfollowUser = (userId: number) => {
+    dispatch(unfollowUser(userId));
+  };
 
-  const handleBlock = () => {
-    user!.isBlocked = true;
-  }
+  const handleBlockUser = (userId: number) => {
+    dispatch(blockUser(userId));
+  };
+
+  const handleUnblockUser = (userId: number) => {
+    dispatch(unblockUser(userId));
+  };
 
   if (isFetching) return <div>Loading...</div>;
   if (error) return <div>An error occurred: {error}</div>;
 
   return (
     <div className={`user-profile ${user?.isBlocked ? 'blocked' : ''}`}>
-      {user && !user.isBlocked && (
+      {user && (
         <>
-          <img className="user-image" src={user.profile_image} alt={user.display_name} />
-          <h2 className="user-name">{user.display_name}</h2>
-          <p className="user-reputation">Reputation: {user.reputation}</p>
-          <p className={`user-follow-indicator ${user.isFollowed ? 'followed' : ''}`}>
-            {user.isFollowed ? 'Followed' : ''}
+          <img className="user-image" src={profile_image} alt={display_name} />
+          <h2 className="user-name">{display_name}</h2>
+          <p className="user-reputation">Reputation: {reputation}</p>
+          <p className={`user-follow-indicator ${isFollowed ? 'followed' : ''}`}>
+            {isFollowed ? 'Followed' : ''}
           </p>
           {isExpanded && (
             <div className="user-actions">
-              {!user.isFollowed 
-                ? <button onClick={handleFollow}>Follow</button> 
-                : <button onClick={handleUnfollow}>Unfollow</button>}
-              <button onClick={handleBlock}>Block</button>
+              {!isFollowed 
+                ? <button onClick={()=>handleFollowUser(id)}>Follow</button> 
+                : <button onClick={()=>handleUnfollowUser(id)}>Unfollow</button>}
+              {!isBlocked 
+              ? <button onClick={()=>handleBlockUser(id)}>Block</button> 
+              : <button onClick={()=>handleUnblockUser(id)}>Unblock</button>}
             </div>
           )}
           <button className="expand-button" onClick={() => setIsExpanded(!isExpanded)}>
@@ -66,7 +71,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, fetchUser }) => {
           </button>
         </>
       )}
-      {user?.isBlocked && (
+      {isBlocked && (
         <p className="blocked-user-message">This user is blocked.</p>
       )}
     </div>

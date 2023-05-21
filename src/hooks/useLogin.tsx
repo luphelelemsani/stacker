@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../store/actions/auth-actions';
+import { hardcodedUser, loginUser } from '../store/actions/auth-actions';
 import { AppDispatch } from '../store';
 
 interface IUseLogin {
@@ -12,18 +12,22 @@ interface IUseLogin {
 export const useLogin = (): IUseLogin => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const dispatch:AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      await dispatch(loginUser(email, password));
+      if(email === hardcodedUser.email && password === hardcodedUser.password) {
+        dispatch(loginUser(email, password));
+      } else {
+        throw new Error("Invalid email or password.");
+      }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
       setIsLoading(false);
-    } catch (err) {
-      setIsLoading(false);
-      setError("Invalid email or password.");
     }
   };
 
